@@ -13,7 +13,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/*.sln'
+    projects: 'MVC/MVC.ProjectStarter/MVC.ProjectStarter.sln'
   displayName: 'Dotnet Build'
   
 - task: SonarCloudPrepare@1
@@ -25,13 +25,14 @@ steps:
     projectName: 'a_project'
   displayName: 'Sonar Prepare'
 
+- task: SonarCloudAnalyze@1
+  displayName: 'Sonar Analysis'
+
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: true
 
-- task: SonarCloudAnalyze@1
-  displayName: 'Sonar Analysis'
 
 - task: AzureRmWebAppDeployment@4
   inputs:
