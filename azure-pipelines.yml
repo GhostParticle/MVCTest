@@ -10,11 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: 'MVC/MVC.ProjectStarter/MVC.ProjectStarter.sln'
-  displayName: 'Dotnet Build'
+
   
 - task: SonarCloudPrepare@1
   inputs:
@@ -24,6 +20,12 @@ steps:
     projectKey: 'GhostParticle_MVCTest'
     projectName: 'a_project'
   displayName: 'Sonar Prepare'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: 'MVC/MVC.ProjectStarter/MVC.ProjectStarter.sln'
+  displayName: 'Dotnet Build'
 
 - task: SonarCloudAnalyze@1
   displayName: 'Sonar Analysis'
