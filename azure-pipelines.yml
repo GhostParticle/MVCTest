@@ -9,16 +9,15 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
 
-- script: |
-    echo "Show List Of Directories"
-    ls
-  displayName: 'Showing List of Directories'
-
-- script: 
-    echo "Some Stuff"
-    echo "Heres More Stuf"
-  displayName: 'No More Stuff to Show'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(75fd32f2-6a0a-4ac5-a9b2-77bced7a92c5)'
+    appType: 'webApp'
+    WebAppName: 'TestProjectMVC'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
